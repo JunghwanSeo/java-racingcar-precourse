@@ -1,26 +1,21 @@
 package racingcar;
 
-import domain.Match;
+import racingcar.domain.Drivers;
+import racingcar.domain.Match;
+import racingcar.util.Input;
+import racingcar.util.Output;
 
 public class GameManager {
     public void run(){
-        Match match = Match.init();
-        DriverRegistration.init(match);
-        Round.init(match);
+        Drivers drivers = new Drivers(Input.userName());
+        int round = Input.round();
 
-        for(int round=0; match.getRoundMax()>round; round++){
-            Round.play(match);
-            roundEndDisplay();
+        Match match = new Match(drivers);
+        for(int a=0; round>a; a++){
+            match.paly();
+            Output.roundResult(match);
         }
 
-        matchResultDisplay(match);
-    }
-
-    private void roundEndDisplay(){
-        System.out.println("");
-    }
-
-    private void matchResultDisplay(Match match){
-        System.out.println("최종 우승자: " + String.join(",", match.getRanker()));
-    }
+        Output.result(match);
+   }
 }
